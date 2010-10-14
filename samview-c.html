@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>SAMtools</title>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<script language="JavaScript" src="jsInclude.js"></script>
+<body onLoad="jsInclude('header', 'inc/header.html');">
+<div id="wrap">
+<span id="header"></span>
+<div id="mainwide">
+<!-- BEGIN OF THE MAIN BODY -->
+<p>The following shows an example of how to get alignments in a SAM/BAM
+file. Jar-ball <a href="samtools.jar">samtools.jar</a> is a snapshot of
+the Java version of SAMtools compiled on 17 April, 2009. A region can be
+specified, for example, as `chr1', `chr1:1000' or `chr1:1000-2000'.</p>
+
+<textarea name="code" class="c" cols="60" rows="10">
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <assert.h>
+#include "sam.h"
+
+static int g_min_mapQ = 0;
+
+// callback function for bam_fetch()
+static int view_func(const bam1_t *b, void *data)
+{
+	if (b->core.qual < g_min_mapQ) return 0;
+	samwrite((samfile_t*)data, b);
+	return 0;
+}
+
+int main_samview(int argc, char *argv[])
+{
+	int c, is_bamin = 1, ret = 0;
+	samfile_t *in, *out;
+	char in_mode[4], out_mode[4], *fn_out = 0, *fn_list = 0;
+
+	/* parse command-line options */
+	strcpy(in_mode, "r"); strcpy(out_mode, "w");
+	while ((c = getopt(argc, argv, "bt:q:")) >= 0) {
+		switch (c) {
+		case 'b': strcat(out_mode, "b"); break;
+		case 't': fn_list = strdup(optarg); is_bamin = 0; break;
+		case 'q': g_min_mapQ = atoi(optarg); break;
+		default: return 1;
+		}
+	}
+	if (is_bamin) strcat(in_mode, "b");
+	strcat(out_mode, "h"); // print the header section in SAM
+	if (argc == optind) return 1;
+
+	// open file handlers
+	assert(in = samopen(argv[optind], in_mode, fn_list));
+	assert(out = samopen("-", out_mode, in->header));
+
+	if (argc == optind + 1) { // convert/print the entire file
+		bam1_t *b = bam_init1();
+		int r;
+		while ((r = samread(in, b)) >= 0) // read one alignment from `in'
+			samwrite(out, b); // write the alignment to `out'
+		assert(r == -1);
+		bam_destroy1(b);
+	} else { // retrieve alignments in specified regions
+		int i;
+		bam_index_t *idx = 0;
+		if (is_bamin) idx = bam_index_load(argv[optind]); // load BAM index
+		assert(idx);
+		for (i = optind + 1; i < argc; ++i) {
+			int tid, beg, end;
+			bam_parse_region(in->header, argv[i], &tid, &beg, &end); // parse a region
+			if (tid < 0) continue; // reference name is not found
+			bam_fetch(in->x.bam, idx, tid, beg, end, out, view_func); // fetch alignments
+		}
+		bam_index_destroy(idx); // destroy the BAM index
+	}
+
+	// close files, free and return
+	free(fn_list); free(fn_out);
+	samclose(in);
+	samclose(out);
+	return ret;
+}
+</textarea>
+
+<link type="text/css" rel="stylesheet" href="SyntaxHighlighter.css"></link>
+<script language="javascript" src="shCore.js"></script>
+<script language="javascript" src="shBrushCpp.js"></script>
+<script language="javascript">
+  dp.SyntaxHighlighter.HighlightAll('code');
+</script>
+<!-- END OF THE MAIN BODY  -->
+</div>
+
+<div style="clear: both;"> </div>
+<div id="footer">
+<hr/>
+<p style="text-align: right;">Last modified: 2009-04-17</p>
+</div>
+</div>
+</body>
+</html>
