@@ -1,0 +1,289 @@
+<HTML><HEAD>
+<TITLE>tabix.1</TITLE>
+
+<style type="text/css">
+a:link {
+	text-decoration: none;
+	color: #0092e8;
+}
+a:visited {
+	text-decoration: none;
+	color: #0092e8;
+}
+a:hover {
+	text-decoration: underline;
+	color: #0092e8;
+}
+body, td, th {
+	font: 12px consolas, andale mono, courier, mono;
+}
+body {
+	color: #000;
+	background: #fff;
+	margin: 0;
+	padding: 0;
+}
+table {
+	border: solid 0px #ccc;
+}
+td {
+	vertical-align: top;
+	padding: 0.2em;
+}
+th {
+	font-weight: bold;
+	text-align: left;
+	padding: 0.2em;
+}
+#tbl table {
+	border: solid 1px #ccc;
+}
+#tbl td {
+	border: solid 1px #ccc;
+	padding: 0.3em;
+}
+#wrap {
+  width: 740px;
+  text-align: left;
+  margin: 0 auto;
+}
+hr {
+	margin: 1em 0;
+	color: #C7C7C7;
+	background: #C7C7C7;
+	border-color: #C7C7C7;
+	border-style: none;
+	height: 1px;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Trebuchet MS", arial, sans-serif;
+	font-weight: bold;
+}
+p {
+    text-align: justify;
+}
+</style>
+</HEAD>
+<BODY>
+<div id="wrap"><A NAME=top></A>
+<!-- .TH tabix 1 "16 March 2009" "tabix-0.1.1" "Bioinformatics tools" -->
+<CENTER>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>tabix (1)</NOBR><HR></H1>
+</CENTER>
+<!-- .SH NAME -->
+<A name=0>
+
+     <H3>NAME</H3>
+
+</A>
+<BLOCKQUOTE>
+<!-- .PP -->
+<P>
+bgzip - Block compression/decompression utility
+<!-- .PP -->
+<P>
+tabix - Generic indexer for TAB-delimited genome position files
+<!-- .SH SYNOPSIS -->
+</BLOCKQUOTE>
+<A name=contents></A><H3>CONTENTS</H3></A>
+<BLOCKQUOTE>
+<A HREF=#1>Synopsis</A><BR>
+<A HREF=#2>Description</A><BR>
+<A HREF=#3>Options Of Tabix</A><BR>
+<A HREF=#4>Example</A><BR>
+<A HREF=#5>Notes</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>See Also</A><BR>
+</BLOCKQUOTE>
+<A name=8>
+
+     <H3>SYNOPSIS</H3>
+
+</A>
+<BLOCKQUOTE>
+<!-- .PP -->
+<P>
+<!-- .B bgzip -->
+<B>bgzip</B> <!-- .RB [ \-cdh ] -->
+[<B>-cdh</B>] <!-- .RB [ \-b -->
+[<B>-b</B> <!-- .IR virtualOffset ] -->
+<I>virtualOffset</I>] <!-- .RB [ \-s -->
+[<B>-s</B> <!-- .IR size ] -->
+<I>size</I>] <!-- .RI [ file ] -->
+[<I>file</I>] <!-- .PP -->
+<P>
+<!-- .B tabix -->
+<B>tabix</B> <!-- .RB [ \-0 ] -->
+[<B>-0</B>] <!-- .RB [ \-p -->
+[<B>-p</B> <!-- .R gff|bed|sam|vcf] -->
+<!-- ignored unsupported tag .R -->
+<!-- .RB [ \-s -->
+[<B>-s</B> <!-- .IR seqCol ] -->
+<I>seqCol</I>] <!-- .RB [ \-b -->
+[<B>-b</B> <!-- .IR begCol ] -->
+<I>begCol</I>] <!-- .RB [ \-e -->
+[<B>-e</B> <!-- .IR endCol ] -->
+<I>endCol</I>] <!-- .RB [ \-S -->
+[<B>-S</B> <!-- .IR lineSkip ] -->
+<I>lineSkip</I>] <!-- .RB [ \-c -->
+[<B>-c</B> <!-- .IR metaChar ] -->
+<I>metaChar</I>] <!-- .I in.tab.bgz -->
+<I>in.tab.bgz</I> <!-- .RI [ "region1 " [ "region2 " [ ... "]]]" -->
+[<I>region1 </I>[<I>region2 </I>[<I>...</I>]]] <P>
+<!-- .SH DESCRIPTION -->
+</BLOCKQUOTE>
+<A name=2>
+
+     <H3>DESCRIPTION</H3>
+
+</A>
+<BLOCKQUOTE>
+<!-- .PP -->
+<P>
+Tabix indexes a TAB-delimited genome position file
+<!-- .I in.tab.bgz -->
+<I>in.tab.bgz</I> and creates an index file
+<!-- .I in.tab.bgz.tbi -->
+<I>in.tab.bgz.tbi</I> when
+<!-- .I region -->
+<I>region</I> is absent from the command-line. The input data file must be position
+sorted and compressed by
+<!-- .B bgzip -->
+<B>bgzip</B> which has a
+<!-- .BR gzip (1) -->
+<B>gzip</B>(1)
+like interface. After indexing, tabix is able to quickly retrieve data
+lines overlapping
+<!-- .I regions -->
+<I>regions</I> specified in the format "chr:beginPos-endPos". Fast data retrieval also
+works over network if URI is given as a file name and in this case the
+index file will be downloaded if it is not present locally.
+<P>
+<!-- .SH OPTIONS OF TABIX -->
+</BLOCKQUOTE>
+<A name=3>
+
+     <H3>OPTIONS OF TABIX</H3>
+
+</A>
+<BLOCKQUOTE>
+<!-- .TP 10 -->
+<TABLE cellpadding=3>
+<TR valign=top><TD width=10% nowrap>
+<!-- .BI "-p " STR -->
+<B>-p </B><I>STR</I> </TD><TD valign=bottom>
+Input format for indexing. Valid values are: gff, bed, sam, vcf and
+psltab. This option should not be applied together with any of
+<!-- .BR \-s ", " \-b ", " \-e ", " \-c " and " \-0 ; -->
+<B>-s</B>, <B>-b</B>, <B>-e</B>, <B>-c</B> and <B>-0</B>; it is not used for data retrieval because this setting is stored in
+the index file. [gff]
+<!-- .TP -->
+</TD></TR>
+<TR valign=top><TD width=10% nowrap>
+<!-- .BI "-s " INT -->
+<B>-s </B><I>INT</I> </TD><TD valign=bottom>
+Column of sequence name. Option
+<!-- .BR \-s ", " \-b ", " \-e ", " \-S ", " \-c " and " \-0 -->
+<B>-s</B>, <B>-b</B>, <B>-e</B>, <B>-S</B>, <B>-c</B> and <B>-0</B> are all stored in the index file and thus not used in data retrieval. [1]
+<!-- .TP -->
+</TD></TR>
+<TR valign=top><TD width=10% nowrap>
+<!-- .BI "-b " INT -->
+<B>-b </B><I>INT</I> </TD><TD valign=bottom>
+Column of start chromosomal position. [4]
+<!-- .TP -->
+</TD></TR>
+<TR valign=top><TD width=10% nowrap>
+<!-- .BI "-e " INT -->
+<B>-e </B><I>INT</I> </TD><TD valign=bottom>
+Column of end chromosomal position. The end column can be the same as the
+start column. [5]
+<!-- .TP -->
+</TD></TR>
+<TR valign=top><TD width=10% nowrap>
+<!-- .BI "-S " INT -->
+<B>-S </B><I>INT</I> </TD><TD valign=bottom>
+Skip first INT lines in the data file. [0]
+<!-- .TP -->
+</TD></TR>
+<TR valign=top><TD width=10% nowrap>
+<!-- .BI "-c " CHAR -->
+<B>-c </B><I>CHAR</I> </TD><TD valign=bottom>
+Skip lines started with character CHAR. [#]
+<!-- .TP -->
+</TD></TR>
+<TR valign=top><TD width=10% nowrap>
+<!-- .B -0 -->
+<B>-0</B> </TD><TD valign=bottom>
+Specify that the position in the data file is 0-based (e.g. UCSC files)
+rather than 1-based.
+<!-- .RE -->
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<P>
+<!-- .SH EXAMPLE -->
+<A name=4>
+
+     <H3>EXAMPLE</H3>
+
+</A>
+<BLOCKQUOTE>
+(grep ^"#" in.gff; grep -v ^"#" in.gff | sort -k1,1 -k4,4n) | bgzip &gt; sorted.gff.gz;
+<P>
+tabix -p gff sorted.gff.gz;
+<P>
+tabix sorted.gff.gz chr1:10,000,000-20,000,000;
+<P>
+<!-- .SH NOTES -->
+</BLOCKQUOTE>
+<A name=5>
+
+     <H3>NOTES</H3>
+
+</A>
+<BLOCKQUOTE>
+It is straightforward to achieve overlap queries using the standard
+B-tree index (with or without binning) implemented in all SQL databases,
+or the R-tree index in PostgreSQL and Oracle. But there are still many
+reasons to use tabix. Firstly, tabix directly works with a lot of widely
+used TAB-delimited formats such as GFF/GTF and BED. We do not need to
+design database schema or specialized binary formats. Data do not need
+to be duplicated in different formats, either. Secondly, tabix works on
+compressed data files while most SQL databases do not. The GenCode
+annotation GTF can be compressed down to 4%.  Thirdly, tabix is
+fast. The same indexing algorithm is known to work efficiently for an
+alignment with a few billion short reads. SQL databases probably cannot
+easily handle data at this scale. Last but not the least, tabix supports
+remote data retrieval. One can put the data file and the index at an FTP
+or HTTP server, and other users or even web services will be able to get
+a slice without downloading the entire file.
+<P>
+<!-- .SH AUTHOR -->
+</BLOCKQUOTE>
+<A name=6>
+
+     <H3>AUTHOR</H3>
+
+</A>
+<BLOCKQUOTE>
+<!-- .PP -->
+<P>
+Tabix was written by Heng Li. The BGZF library was originally
+implemented by Bob Handsaker and modified by Heng Li for remote file
+access and in-memory caching.
+<P>
+<!-- .SH SEE ALSO -->
+</BLOCKQUOTE>
+<A name=7>
+
+     <H3>SEE ALSO</H3>
+
+</A>
+<BLOCKQUOTE>
+<!-- .PP -->
+<P>
+<!-- .BR samtools (1) -->
+<B>samtools</B>(1)
+</BLOCKQUOTE>
+<P><HR>
+<TABLE width=100%><TR> <TD width=33%><I>tabix-0.1.1</I></TD> <TD width=33% align=center>tabix (1)</TD> <TD align=right width=33%><I>16 March 2009</I></TD> </TR></TABLE></div></BODY></HTML>

@@ -1,0 +1,2 @@
+Redirect permanent /SAM1.pdf  http://samtools.github.io/hts-specs/SAMv1.pdf
+Redirect permanent /SAMv1.pdf http://samtools.github.io/hts-specs/SAMv1.pdf

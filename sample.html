@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Sample page</title>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+</head>
+<script language="JavaScript" src="jsInclude.js"></script>
+<body onLoad="jsInclude('header', 'inc/header.html');">
+<div id="wrap">
+<span id="header"></span>
+<!-- For a small page, we can skip the sidebar section and jsInclude the
+     default 'inc/left0.html'. See index.html for an example. -->
+<div id="sidebar">
+<!-- BEGIN OF THE SIDEBAR  -->
+<h3>Header1</h3>
+<ul>
+  <li><a href="#">item1</a>
+  <li><a href="#">item2</a>
+</ul>
+<h3>Header2</h3>
+<ul>
+  <li><a href="#">item1</a>
+  <li><a href="#">item2</a>
+</ul>
+<!-- END OF THE SIDEBAR  -->
+</div>
+<!-- For a page without sidebar, change "main" to "widemain" -->
+<div id="main">
+<!-- BEGIN OF THE MAIN BODY  -->
+The main body.
+<!-- END OF THE MAIN BODY  -->
+</div>
+
+<div style="clear: both;"> </div>
+<div id="footer">
+<hr/>
+<!-- BEGIN OF THE FOOTER  -->
+<p style="text-align: right;">Last modified: 2009-04-15</p>
+<!-- END OF THE FOOTER  -->
+</div>
+</div>
+</body>
+</html>
