@@ -1,11 +1,9 @@
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+title: Samtools organisation
+description: "Samtools organisation for next-generation sequencing developers: htslib C&nbsp;API, htsjdk Java API, file format specifications, and samtools/bcftools source code."
 baseurl: ""
-url: "http://yourdomain.com"
-twitter_username: jekyllrb
-github_username:  jekyll
+url: "http://samtools.github.io"
+github_username: samtools
 
 # Build settings
 markdown: kramdown
