@@ -36,6 +36,6 @@ available mainly for their historical interest.
 [hts-specs repository]:  https://github.com/samtools/hts-specs
 [htsjdk repository]:     https://github.com/samtools/htsjdk
 [htslib repository]:     https://github.com/samtools/htslib
-[picard tools]:          http://picard.sourceforge.net/
+[picard tools]:          http://broadinstitute.github.io/picard/
 [samtools]:              https://github.com/samtools/samtools
 [samtools organisation]: https://github.com/samtools
