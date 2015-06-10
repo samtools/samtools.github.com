@@ -1,5 +1,5 @@
 ./cleanup.sh
 find . -name "*.html" | xargs ./csi2ssi.pl
 mv index.html index.true.html
-rsync -Cavz * lh3lh3,samtools@web.sourceforge.net:htdocs/
+rsync -Ccavz --exclude '*.sh' --exclude '*.pl' .ht* * web.sourceforge.net:/home/project-web/samtools/htdocs/
 ./cleanup.sh
