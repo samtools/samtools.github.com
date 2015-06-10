@@ -1,2 +1,6 @@
 Redirect permanent /SAM1.pdf  http://samtools.github.io/hts-specs/SAMv1.pdf
 Redirect permanent /SAMv1.pdf http://samtools.github.io/hts-specs/SAMv1.pdf
+Redirect permanent /samtools.html  http://www.htslib.org/doc/samtools.html
+Redirect permanent /samtools.shtml http://www.htslib.org/doc/samtools.html
+Redirect permanent /tabix.html  http://www.htslib.org/doc/tabix.html
+Redirect permanent /tabix.shtml http://www.htslib.org/doc/tabix.html
