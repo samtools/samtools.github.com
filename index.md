@@ -10,7 +10,8 @@ groups working on formats and tools for next-generation sequencing:
 
 The [hts-specs repository] contains the specifications of several sequence
 data formats (SAM, BAM, and CRAM), variant calling data formats (VCF and BCF),
-and related formats such as indices.
+feature data formats (BED), and related formats such as indexing, encryption,
+and transfer protocols.
 Changes to these formats are discussed as issues and pull requests there.
 
 # [C API and high-throughput sequencing tools](http://www.htslib.org/)
